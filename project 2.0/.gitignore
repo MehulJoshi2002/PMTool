@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# env files (contains your API keys - never push these)
+.env.local
+.env*.local
+
+# misc
+tsconfig.tsbuildinfo
+.DS_Store
+*.pem
