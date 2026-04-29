@@ -224,8 +224,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
       } else {
         const mapped = all.map(toWorkspace);
         setWorkspaces(mapped);
-        setActiveWorkspaceId(mapped[0].id);
-        await loadWorkspaceData(mapped[0].id);
+        // Check URL for ?workspace= param (set after accepting invite)
+        const urlParam = typeof window !== 'undefined'
+          ? new URLSearchParams(window.location.search).get('workspace')
+          : null;
+        const savedId = typeof window !== 'undefined'
+          ? localStorage.getItem('activeWorkspaceId')
+          : null;
+        const preferred = urlParam || savedId;
+        const initial = preferred && mapped.find(w => w.id === preferred) ? preferred : mapped[0].id;
+        setActiveWorkspaceId(initial);
+        await loadWorkspaceData(initial);
       }
 
       setLoading(false);
@@ -247,6 +256,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const switchWorkspace = useCallback(async (id: string) => {
     setActiveWorkspaceId(id);
+    if (typeof window !== 'undefined') localStorage.setItem('activeWorkspaceId', id);
     await loadWorkspaceData(id);
   }, [loadWorkspaceData]);
 
