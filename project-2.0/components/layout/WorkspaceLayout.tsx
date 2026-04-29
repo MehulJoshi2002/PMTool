@@ -7,7 +7,7 @@ import { AppProvider, useAppContext } from "../../lib/AppContext";
 import { AuthProvider, useAuth } from "../../lib/AuthContext";
 import { XCircle, Loader2 } from "lucide-react";
 
-const AUTH_ROUTES = ["/login", "/signup"];
+const AUTH_ROUTES = ["/login", "/signup", "/forgot-password", "/reset-password"];
 
 function LayoutContent({ children, isFullScreen }: { children: React.ReactNode; isFullScreen: boolean }) {
   const { isPresentMode, setIsPresentMode } = useAppContext();
