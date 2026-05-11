@@ -11,6 +11,7 @@ export interface DiagramNode {
   label: string;
   description: string;
   color: string;
+  fontSize?: number;
 }
 
 export interface Connection {
@@ -29,11 +30,11 @@ export interface DiagramState {
 
 // Default dimensions for each shape type
 export const SHAPE_DEFAULTS: Record<ShapeType, { width: number; height: number }> = {
-  process: { width: 160, height: 80 },
-  decision: { width: 120, height: 120 },
-  terminal: { width: 140, height: 60 },
-  data: { width: 160, height: 80 },
-  note: { width: 160, height: 100 },
+  process: { width: 200, height: 100 },
+  decision: { width: 160, height: 160 },
+  terminal: { width: 180, height: 80 },
+  data: { width: 200, height: 100 },
+  note: { width: 200, height: 120 },
 };
 
 // Color palette for nodes

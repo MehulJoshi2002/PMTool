@@ -54,6 +54,10 @@ export default function DiagramCanvas({
   const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
 
+  // Resize node state
+  const [resizingNodeId, setResizingNodeId] = useState<string | null>(null);
+  const resizeStart = useRef({ x: 0, y: 0, startWidth: 0, startHeight: 0 });
+
   // Connection creation state
   const [pendingConnection, setPendingConnection] = useState<{
     fromNodeId: string;
@@ -156,6 +160,23 @@ export default function DiagramCanvas({
     [activeTool, screenToSVG, nodes, onSelectNode, onSelectConnection]
   );
 
+  const handleResizeMouseDown = useCallback(
+    (e: React.MouseEvent, nodeId: string) => {
+      onSelectNode(nodeId);
+      const pos = screenToSVG(e.clientX, e.clientY);
+      const node = nodes.find((n) => n.id === nodeId);
+      if (!node) return;
+      resizeStart.current = {
+        x: pos.x,
+        y: pos.y,
+        startWidth: node.width,
+        startHeight: node.height,
+      };
+      setResizingNodeId(nodeId);
+    },
+    [screenToSVG, nodes, onSelectNode]
+  );
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       const pos = screenToSVG(e.clientX, e.clientY);
@@ -178,15 +199,69 @@ export default function DiagramCanvas({
         const newX = Math.round((pos.x - dragOffset.current.x) / GRID_SIZE) * GRID_SIZE;
         const newY = Math.round((pos.y - dragOffset.current.y) / GRID_SIZE) * GRID_SIZE;
         onUpdateNode(draggingNodeId, { x: newX, y: newY });
+      } else if (resizingNodeId) {
+        const deltaX = pos.x - resizeStart.current.x;
+        const deltaY = pos.y - resizeStart.current.y;
+        
+        // Snap resizing to grid, minimum 40x40
+        const newW = Math.max(40, Math.round((resizeStart.current.startWidth + deltaX) / GRID_SIZE) * GRID_SIZE);
+        const newH = Math.max(40, Math.round((resizeStart.current.startHeight + deltaY) / GRID_SIZE) * GRID_SIZE);
+        
+        onUpdateNode(resizingNodeId, { width: newW, height: newH });
       }
     },
-    [isPanning, draggingNodeId, screenToSVG, viewBox.w, viewBox.h, onUpdateNode]
+    [isPanning, draggingNodeId, resizingNodeId, screenToSVG, viewBox.w, viewBox.h, onUpdateNode]
   );
 
-  const handleMouseUp = useCallback(() => {
+  const handleMouseUp = useCallback((e?: React.MouseEvent) => {
     setIsPanning(false);
     setDraggingNodeId(null);
-  }, []);
+    setResizingNodeId(null);
+
+    // Finalize drag-to-connect
+    if (pendingConnection) {
+      let targetNodeId = hoveredPort?.nodeId;
+      let targetPort = hoveredPort?.port;
+
+      // If they didn't drop directly on a port, check if they dropped anywhere inside a node's bounds
+      if (!targetNodeId) {
+        let finalPos = mousePos;
+        if (e && e.clientX !== undefined) {
+          finalPos = screenToSVG(e.clientX, e.clientY);
+        }
+        
+        // Iterate backwards so shapes rendered on top are selected first
+        const droppedNode = [...nodes].reverse().find(n => 
+          finalPos.x >= n.x && finalPos.x <= n.x + n.width &&
+          finalPos.y >= n.y && finalPos.y <= n.y + n.height
+        );
+        if (droppedNode) {
+          targetNodeId = droppedNode.id;
+          targetPort = findClosestPort(finalPos, droppedNode);
+        }
+      }
+
+      if (targetNodeId && targetPort && targetNodeId !== pendingConnection.fromNodeId) {
+        // Check duplicate
+        const exists = connections.some(
+          (c) =>
+            c.fromNodeId === pendingConnection.fromNodeId &&
+            c.toNodeId === targetNodeId
+        );
+        if (!exists) {
+          const newConn: Connection = {
+            id: crypto.randomUUID(),
+            fromNodeId: pendingConnection.fromNodeId,
+            fromPort: pendingConnection.fromPort,
+            toNodeId: targetNodeId,
+            toPort: targetPort,
+          };
+          onAddConnection(newConn);
+        }
+      }
+      setPendingConnection(null);
+    }
+  }, [pendingConnection, hoveredPort, mousePos, screenToSVG, nodes, connections, onAddConnection]);
 
   // ---- ZOOM ----
   const handleWheel = useCallback(
@@ -207,42 +282,11 @@ export default function DiagramCanvas({
   );
 
   // ---- CONNECTION CREATION ----
-  const handlePortClick = useCallback(
-    (nodeId: string, port: PortPosition) => {
-      if (!pendingConnection) {
-        // First click: start connection
-        setPendingConnection({ fromNodeId: nodeId, fromPort: port });
-      } else {
-        // Second click: finish connection
-        if (pendingConnection.fromNodeId === nodeId) {
-          // Can't connect to self
-          setPendingConnection(null);
-          return;
-        }
-
-        // Check for duplicate connections
-        const exists = connections.some(
-          (c) =>
-            c.fromNodeId === pendingConnection.fromNodeId &&
-            c.toNodeId === nodeId
-        );
-        if (exists) {
-          setPendingConnection(null);
-          return;
-        }
-
-        const newConn: Connection = {
-          id: crypto.randomUUID(),
-          fromNodeId: pendingConnection.fromNodeId,
-          fromPort: pendingConnection.fromPort,
-          toNodeId: nodeId,
-          toPort: port,
-        };
-        onAddConnection(newConn);
-        setPendingConnection(null);
-      }
+  const handlePortMouseDown = useCallback(
+    (e: React.MouseEvent, nodeId: string, port: PortPosition) => {
+      setPendingConnection({ fromNodeId: nodeId, fromPort: port });
     },
-    [pendingConnection, connections, onAddConnection]
+    []
   );
 
   // Pending connection preview line
@@ -277,9 +321,9 @@ export default function DiagramCanvas({
 
   // ---- RENDER ----
   return (
-    <div className="flex-1 relative overflow-hidden bg-[#0f0f1a]">
+    <div className="flex-1 relative overflow-hidden bg-slate-50 dark:bg-[#0f0f1a]">
       {/* Zoom indicator */}
-      <div className="absolute top-4 right-4 z-10 bg-white/5 backdrop-blur-sm text-gray-400 text-xs px-3 py-1.5 rounded-lg border border-white/5 font-mono">
+      <div className="absolute top-4 right-4 z-10 bg-white/5 backdrop-blur-sm text-slate-500 dark:text-gray-400 text-xs px-3 py-1.5 rounded-lg border border-white/5 font-mono">
         {Math.round((3000 / viewBox.w) * 100)}%
       </div>
 
@@ -291,6 +335,7 @@ export default function DiagramCanvas({
       )}
 
       <svg
+        id="diagram-canvas"
         ref={svgRef}
         viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`}
         className="w-full h-full"
@@ -356,8 +401,9 @@ export default function DiagramCanvas({
             isSelected={selectedNodeId === node.id}
             isConnecting={activeTool === "connect" || !!pendingConnection || true}
             onMouseDown={handleNodeMouseDown}
+            onResizeMouseDown={handleResizeMouseDown}
             onDoubleClick={onStartEdit}
-            onPortClick={handlePortClick}
+            onPortMouseDown={handlePortMouseDown}
             onPortMouseEnter={(nodeId, port) => setHoveredPort({ nodeId, port })}
             onPortMouseLeave={() => setHoveredPort(null)}
           />

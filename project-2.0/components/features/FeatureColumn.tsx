@@ -69,13 +69,13 @@ export default function FeatureColumn({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: release.color }} />
-            <h3 className="text-sm font-bold text-white truncate">{release.name}</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate">{release.name}</h3>
           </div>
           <div className="flex items-center gap-2 mt-0.5 ml-4">
             {release.date && (
-              <span className="text-[10px] text-gray-500">{release.date}</span>
+              <span className="text-[10px] text-slate-600 dark:text-gray-500">{release.date}</span>
             )}
-            <span className="text-[10px] text-gray-600">
+            <span className="text-[10px] text-slate-400 dark:text-gray-600">
               Showing {features.length} of {features.length}
             </span>
           </div>
@@ -85,14 +85,14 @@ export default function FeatureColumn({
         <div className="relative">
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="p-1 rounded-md text-gray-600 hover:text-gray-300 hover:bg-white/[0.05] transition"
+            className="p-1 rounded-md text-slate-400 dark:text-gray-600 hover:text-slate-900 dark:hover:text-gray-300 hover:bg-slate-200 dark:hover:bg-white/[0.05] transition"
           >
             <MoreHorizontal size={14} />
           </button>
           {showMenu && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} />
-              <div className="absolute right-0 top-8 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-40">
+              <div className="absolute right-0 top-8 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-40">
                 {onDeleteRelease && (
                   <button
                     onClick={() => {
@@ -125,26 +125,26 @@ export default function FeatureColumn({
 
         {/* Add feature form / button */}
         {showAddForm ? (
-          <div className="bg-[#1e2132] border border-white/[0.1] rounded-lg p-3">
+          <div className="bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg p-3">
             <input
               type="text"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Feature title..."
-              className="w-full bg-transparent border-none text-sm text-white placeholder-gray-600 focus:outline-none mb-2"
+              className="w-full bg-transparent border-none text-sm text-slate-900 dark:text-white placeholder-gray-600 focus:outline-none mb-2"
               autoFocus
             />
             <div className="flex gap-2">
               <button
                 onClick={handleAdd}
-                className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-md transition"
+                className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white text-xs font-medium rounded-md transition"
               >
                 Add
               </button>
               <button
                 onClick={() => { setShowAddForm(false); setNewTitle(''); }}
-                className="px-3 py-1 text-xs text-gray-500 hover:text-gray-300 transition"
+                className="px-3 py-1 text-xs text-slate-600 dark:text-gray-500 hover:text-slate-900 dark:hover:text-gray-300 transition"
               >
                 Cancel
               </button>
@@ -153,7 +153,7 @@ export default function FeatureColumn({
         ) : (
           <button
             onClick={() => setShowAddForm(true)}
-            className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-dashed border-white/[0.06] hover:border-white/[0.12] text-gray-600 hover:text-gray-400 text-xs transition"
+            className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-dashed border-slate-200 dark:border-white/[0.06] hover:border-white/[0.12] text-slate-400 dark:text-gray-600 hover:text-slate-600 dark:hover:text-slate-500 dark:text-gray-400 text-xs transition"
           >
             <Plus size={12} />
             Add feature

@@ -124,46 +124,46 @@ export default function TeamPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0E1015] text-white">
+    <div className="min-h-screen bg-slate-100 dark:bg-[#0E1015] text-slate-900 dark:text-white">
       <div className="max-w-4xl mx-auto p-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Team Management</h1>
-          <p className="text-gray-400">Manage team members and invitations for this workspace.</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Team Management</h1>
+          <p className="text-slate-500 dark:text-gray-400">Manage team members and invitations for this workspace.</p>
         </div>
 
         <div className="grid gap-6">
           {/* Current Members */}
-          <div className="bg-[#171923] rounded-3xl border border-white/[0.06] p-6">
+          <div className="bg-white dark:bg-[#171923] rounded-3xl border border-slate-200 dark:border-white/[0.06] p-6">
             <div className="flex items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className="text-xl font-semibold text-white">Team Members</h2>
-                <p className="text-sm text-gray-500">Active members in this workspace.</p>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Team Members</h2>
+                <p className="text-sm text-slate-600 dark:text-gray-500">Active members in this workspace.</p>
               </div>
-              <div className="rounded-full bg-[#111423] px-3 py-2 text-xs uppercase tracking-[0.15em] text-gray-400">
+              <div className="rounded-full bg-[#111423] px-3 py-2 text-xs uppercase tracking-[0.15em] text-slate-500 dark:text-gray-400">
                 {loadingMembers ? 'Loading' : `${members.length} member${members.length === 1 ? '' : 's'}`}
               </div>
             </div>
 
             {loadingMembers ? (
-              <div className="rounded-3xl border border-white/[0.06] bg-black/20 px-6 py-10 text-center text-sm text-gray-400">Loading members…</div>
+              <div className="rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-black/20 px-6 py-10 text-center text-sm text-slate-500 dark:text-gray-400">Loading members…</div>
             ) : members.length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-white/[0.08] bg-black/20 px-6 py-10 text-center text-sm text-gray-500">
+              <div className="rounded-3xl border border-dashed border-slate-200 dark:border-white/[0.08] bg-white dark:bg-black/20 px-6 py-10 text-center text-sm text-slate-600 dark:text-gray-500">
                 No team members yet. Invites accepted will appear here.
               </div>
             ) : (
               <div className="space-y-4">
                 {members.map((member) => (
-                  <div key={member.id} className="flex flex-col gap-3 rounded-3xl border border-white/[0.08] bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div key={member.id} className="flex flex-col gap-3 rounded-3xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
                         <Users size={18} className="text-blue-400" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{member.user_email}</p>
-                        <p className="text-xs text-gray-500">Joined {new Date(member.joined_at).toLocaleDateString()}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{member.user_email}</p>
+                        <p className="text-xs text-slate-600 dark:text-gray-500">Joined {new Date(member.joined_at).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    <div className="inline-flex items-center rounded-full bg-white/[0.04] px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-gray-300">
+                    <div className="inline-flex items-center rounded-full bg-slate-100 dark:bg-white/[0.04] px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-gray-300">
                       {member.role}
                     </div>
                   </div>
@@ -173,11 +173,11 @@ export default function TeamPage() {
           </div>
 
           {/* Invite New Member */}
-          <div className="bg-[#171923] rounded-3xl border border-white/[0.06] p-6">
+          <div className="bg-white dark:bg-[#171923] rounded-3xl border border-slate-200 dark:border-white/[0.06] p-6">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className="text-xl font-semibold text-white">Invite New Member</h2>
-                <p className="text-sm text-gray-500">Send a workspace invitation by email.</p>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Invite New Member</h2>
+                <p className="text-sm text-slate-600 dark:text-gray-500">Send a workspace invitation by email.</p>
               </div>
               {currentUser ? (
                 <div className="flex items-center gap-2 rounded-full bg-[#111423] px-4 py-2 text-sm text-gray-300">
@@ -185,7 +185,7 @@ export default function TeamPage() {
                   Signed in as {currentUser.email}
                 </div>
               ) : (
-                <div className="rounded-full bg-[#111423] px-4 py-2 text-sm text-gray-400">No authenticated user detected</div>
+                <div className="rounded-full bg-[#111423] px-4 py-2 text-sm text-slate-500 dark:text-gray-400">No authenticated user detected</div>
               )}
             </div>
 
@@ -195,12 +195,12 @@ export default function TeamPage() {
                 value={inviteEmail}
                 onChange={(e) => setInviteEmail(e.target.value)}
                 placeholder="teammate@company.com"
-                className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3 rounded-2xl focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white px-4 py-3 rounded-2xl focus:outline-none focus:border-blue-500"
               />
               <button
                 onClick={handleInvite}
                 disabled={inviting || !inviteEmail.trim()}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {inviting ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
                 {inviting ? 'Sending' : 'Send invite'}
@@ -214,36 +214,36 @@ export default function TeamPage() {
               </div>
             )}
 
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-4 text-sm text-slate-600 dark:text-gray-500">
               Invites are sent via email with a link to accept and join the workspace.
             </p>
           </div>
 
           {/* Pending Invitations */}
-          <div className="bg-[#171923] rounded-3xl border border-white/[0.06] p-6">
+          <div className="bg-white dark:bg-[#171923] rounded-3xl border border-slate-200 dark:border-white/[0.06] p-6">
             <div className="flex items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className="text-xl font-semibold text-white">Pending Invitations</h2>
-                <p className="text-sm text-gray-500">Invites waiting to be accepted.</p>
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Pending Invitations</h2>
+                <p className="text-sm text-slate-600 dark:text-gray-500">Invites waiting to be accepted.</p>
               </div>
-              <div className="rounded-full bg-[#111423] px-3 py-2 text-xs uppercase tracking-[0.15em] text-gray-400">
+              <div className="rounded-full bg-[#111423] px-3 py-2 text-xs uppercase tracking-[0.15em] text-slate-500 dark:text-gray-400">
                 {loadingInvites ? 'Loading' : `${invites.filter(i => i.status === 'pending').length} pending`}
               </div>
             </div>
 
             {loadingInvites ? (
-              <div className="rounded-3xl border border-white/[0.06] bg-black/20 px-6 py-10 text-center text-sm text-gray-400">Loading invites…</div>
+              <div className="rounded-3xl border border-slate-200 dark:border-white/[0.06] bg-white dark:bg-black/20 px-6 py-10 text-center text-sm text-slate-500 dark:text-gray-400">Loading invites…</div>
             ) : invites.filter(i => i.status === 'pending').length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-white/[0.08] bg-black/20 px-6 py-10 text-center text-sm text-gray-500">
+              <div className="rounded-3xl border border-dashed border-slate-200 dark:border-white/[0.08] bg-white dark:bg-black/20 px-6 py-10 text-center text-sm text-slate-600 dark:text-gray-500">
                 No pending invites.
               </div>
             ) : (
               <div className="space-y-4">
                 {invites.filter(i => i.status === 'pending').map((invite) => (
-                  <div key={invite.id} className="flex flex-col gap-3 rounded-3xl border border-white/[0.08] bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div key={invite.id} className="flex flex-col gap-3 rounded-3xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <p className="text-sm font-medium text-white">{invite.email}</p>
-                      <p className="text-xs text-gray-500">Sent {new Date(invite.invited_at).toLocaleString()}</p>
+                      <p className="text-sm font-medium text-slate-900 dark:text-white">{invite.email}</p>
+                      <p className="text-xs text-slate-600 dark:text-gray-500">Sent {new Date(invite.invited_at).toLocaleString()}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="inline-flex items-center gap-2 rounded-full bg-amber-500/20 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-amber-300">
@@ -253,14 +253,14 @@ export default function TeamPage() {
                       <button
                         onClick={() => handleCopyLink(invite)}
                         title="Copy invite link"
-                        className="p-2 rounded-xl text-gray-600 hover:text-blue-400 hover:bg-blue-500/10 transition"
+                        className="p-2 rounded-xl text-slate-400 dark:text-gray-600 hover:text-blue-400 hover:bg-blue-500/10 transition"
                       >
                         {copiedId === invite.id ? <Check size={15} className="text-green-400" /> : <Copy size={15} />}
                       </button>
                       <button
                         onClick={() => handleDeleteInvite(invite.id)}
                         title="Cancel invite"
-                        className="p-2 rounded-xl text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition"
+                        className="p-2 rounded-xl text-slate-400 dark:text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition"
                       >
                         <Trash2 size={15} />
                       </button>

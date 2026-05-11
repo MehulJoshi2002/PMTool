@@ -35,7 +35,7 @@ export default function InboxPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] p-8 text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0f0f1a] p-8 text-slate-900 dark:text-white">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -45,13 +45,13 @@ export default function InboxPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">Ideas Inbox</h1>
-              <p className="text-sm text-gray-500 font-medium mt-1">Capture feedback from sales, support, and customers.</p>
+              <p className="text-sm text-slate-600 dark:text-gray-500 font-medium mt-1">Capture feedback from sales, support, and customers.</p>
             </div>
           </div>
         </div>
         <button
           onClick={() => setShowAddForm(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-500 text-white rounded-lg font-semibold shadow-lg shadow-pink-500/20 transition"
+          className="flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white rounded-lg font-semibold shadow-sm dark:shadow-lg shadow-pink-500/20 transition"
         >
           <Plus size={16} />
           Log Feedback
@@ -59,53 +59,53 @@ export default function InboxPage() {
       </div>
 
       {showAddForm && (
-        <div className="mb-8 bg-[#171923] border border-white/[0.08] p-6 rounded-2xl max-w-2xl">
+        <div className="mb-8 bg-white dark:bg-[#171923] border border-slate-200 dark:border-white/[0.08] p-6 rounded-2xl max-w-2xl">
           <h2 className="text-lg font-semibold mb-4">Log New Feedback</h2>
           <form onSubmit={handleAdd} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Issue / Idea Title</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">Issue / Idea Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Users want an export to CSV option"
-                className="w-full bg-white/[0.04] border border-white/[0.08] text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition"
+                className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition"
                 autoFocus
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Details & Context</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">Details & Context</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
                 placeholder="Provide specific details about what they asked for and why..."
-                className="w-full bg-white/[0.04] border border-white/[0.08] text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition resize-y"
+                className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition resize-y"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Requested By (Optional)</label>
+              <label className="block text-xs font-bold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">Requested By (Optional)</label>
               <input
                 type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="e.g. Sarah from Sales, or Acme Corp"
-                className="w-full bg-white/[0.04] border border-white/[0.08] text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition"
+                className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white text-sm px-4 py-2.5 rounded-lg focus:outline-none focus:border-pink-500/50 transition"
               />
             </div>
             <div className="flex gap-3 justify-end pt-2">
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition"
+                className="px-4 py-2 text-sm font-medium text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-pink-600 hover:bg-pink-500 text-white text-sm font-semibold rounded-lg transition"
+                className="px-6 py-2 bg-pink-600 hover:bg-pink-500 text-slate-900 dark:text-white text-sm font-semibold rounded-lg transition"
               >
                 Save to Inbox
               </button>
@@ -118,19 +118,19 @@ export default function InboxPage() {
       <div className="space-y-4 max-w-4xl">
         {ideas.length === 0 && !showAddForm && (
           <div className="py-20 flex flex-col items-center justify-center border-2 border-dashed border-white/[0.05] rounded-3xl">
-            <Inbox size={48} className="text-gray-600 mb-4" />
+            <Inbox size={48} className="text-slate-400 dark:text-gray-600 mb-4" />
             <h3 className="text-xl font-bold text-gray-300">Inbox is zero</h3>
-            <p className="text-gray-500 mt-2 text-center max-w-sm">No pending feedback or ideas. Click "Log Feedback" to record customer requests.</p>
+            <p className="text-slate-600 dark:text-gray-500 mt-2 text-center max-w-sm">No pending feedback or ideas. Click "Log Feedback" to record customer requests.</p>
           </div>
         )}
 
         {ideas.map((idea) => (
-          <div key={idea.id} className="bg-[#171923] border border-white/[0.08] rounded-2xl p-6 group hover:border-white/[0.15] transition flex items-start gap-4">
+          <div key={idea.id} className="bg-white dark:bg-[#171923] border border-slate-200 dark:border-white/[0.08] rounded-2xl p-6 group hover:border-white/[0.15] transition flex items-start gap-4">
             <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-bold text-white mb-2">{idea.title}</h3>
-              <p className="text-sm text-gray-400 mb-4 whitespace-pre-wrap">{idea.description}</p>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{idea.title}</h3>
+              <p className="text-sm text-slate-500 dark:text-gray-400 mb-4 whitespace-pre-wrap">{idea.description}</p>
               
-              <div className="flex items-center gap-4 text-xs font-medium text-gray-500">
+              <div className="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-gray-500">
                 <span className="flex items-center gap-1.5"><User size={14} /> {idea.author}</span>
                 <span>Logged on {idea.createdAt}</span>
               </div>

@@ -67,7 +67,7 @@ export default function ConnectionLine({
   const pathD = `M ${start.x} ${start.y} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${end.x} ${end.y}`;
 
   // Calculate arrow head at the end
-  const arrowLength = 10;
+  const arrowLength = 18;
   const arrowAngle = Math.PI / 6;
   // Tangent at end: derivative of cubic bezier at t=1
   const tx = 3 * (end.x - cp2.x);
@@ -93,8 +93,8 @@ export default function ConnectionLine({
       <path
         d={pathD}
         fill="none"
-        stroke={isSelected ? "#3B82F6" : "#475569"}
-        strokeWidth={isSelected ? 2.5 : 1.8}
+        stroke={isSelected ? "#3B82F6" : "#64748b"}
+        strokeWidth={isSelected ? 3.5 : 2.5}
         strokeLinecap="round"
         style={{
           transition: "stroke 0.2s, stroke-width 0.2s",
@@ -105,7 +105,7 @@ export default function ConnectionLine({
       {/* Arrow head */}
       <polygon
         points={`${end.x},${end.y} ${a1x},${a1y} ${a2x},${a2y}`}
-        fill={isSelected ? "#3B82F6" : "#475569"}
+        fill={isSelected ? "#3B82F6" : "#64748b"}
         style={{ transition: "fill 0.2s" }}
       />
 

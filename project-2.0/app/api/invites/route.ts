@@ -68,8 +68,8 @@ export async function POST(request: Request) {
       const message = {
         from: "noreply@biorx.in",
         to: email,
-        subject: "Join your ProductOS workspace",
-        html: `<p>Hello,</p><p>You have been invited to join a ProductOS workspace.</p><p><a href="${inviteUrl}" style="color:#6366f1;font-weight:bold;text-decoration:none;">Click here to join</a></p><p>If you don't have an account yet, sign up first and then return to this link.</p>`,
+        subject: "Join your Voxamo workspace",
+        html: `<p>Hello,</p><p>You have been invited to join a Voxamo workspace.</p><p><a href="${inviteUrl}" style="color:#6366f1;font-weight:bold;text-decoration:none;">Click here to join</a></p><p>If you don't have an account yet, sign up first and then return to this link.</p>`,
       };
 
       const response = await fetch("https://api.resend.com/emails", {

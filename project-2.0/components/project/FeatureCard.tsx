@@ -26,7 +26,7 @@ export default function FeatureCard({ feature, rank, onDelete }: CardProps) {
             </span>
             <button 
               onClick={() => onDelete(feature.id)}
-              className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
+              className="text-slate-500 dark:text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
             >
               <Trash2 size={18} />
             </button>
@@ -34,7 +34,7 @@ export default function FeatureCard({ feature, rank, onDelete }: CardProps) {
         </div>
 
         {/* Breakdown */}
-        <div className="flex gap-4 mt-2 mb-3 text-xs font-mono font-medium text-gray-500">
+        <div className="flex gap-4 mt-2 mb-3 text-xs font-mono font-medium text-slate-600 dark:text-gray-500">
           <span className="bg-blue-50 text-blue-700 px-2 rounded opacity-80">R:{feature.reach}</span>
           <span>×</span>
           <span className="bg-green-50 text-green-700 px-2 rounded opacity-80">I:{feature.impact}</span>
@@ -45,7 +45,7 @@ export default function FeatureCard({ feature, rank, onDelete }: CardProps) {
         </div>
 
         {/* Rule Engine Explanation */}
-        <p className="text-sm text-gray-600 border-l-2 border-blue-400 pl-3 italic">
+        <p className="text-sm text-slate-400 dark:text-gray-600 border-l-2 border-blue-400 pl-3 italic">
           {feature.explanation}
         </p>
       </div>

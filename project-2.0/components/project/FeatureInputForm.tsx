@@ -43,37 +43,37 @@ export default function FeatureInputForm({ onAddFeature }: FormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#171923] p-6 rounded-xl border border-white/[0.06]">
-      <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#171923] p-6 rounded-xl border border-slate-200 dark:border-white/[0.06]">
+      <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-6 flex items-center gap-2">
         <Sparkles size={14} className="text-amber-400" />
         Evaluate Feature
       </h2>
       
       <div className="mb-6">
-        <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Feature Name</label>
+        <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">Feature Name</label>
         <input 
           type="text" 
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. One-Click Checkout"
-          className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 placeholder-gray-600 text-sm transition"
+          className="w-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-900 dark:text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 placeholder-gray-600 text-sm transition"
           required
         />
       </div>
 
       {/* Live score preview */}
-      <div className="mb-6 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+      <div className="mb-6 p-3 rounded-lg bg-white/[0.03] border border-slate-200 dark:border-white/[0.06]">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Live Score Preview</span>
+          <span className="text-xs font-semibold text-slate-600 dark:text-gray-500 uppercase tracking-wider">Live Score Preview</span>
           <span className="text-xl font-bold font-mono text-blue-400">{previewScore}</span>
         </div>
         <div className="flex items-center gap-1.5 mt-2">
           <span className="text-[10px] font-mono font-bold text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded">R:{reach}</span>
-          <span className="text-gray-600 text-[10px]">×</span>
+          <span className="text-slate-400 dark:text-gray-600 text-[10px]">×</span>
           <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">I:{impact}</span>
-          <span className="text-gray-600 text-[10px]">×</span>
+          <span className="text-slate-400 dark:text-gray-600 text-[10px]">×</span>
           <span className="text-[10px] font-mono font-bold text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">C:{confidence}</span>
-          <span className="text-gray-600 text-[10px]">÷</span>
+          <span className="text-slate-400 dark:text-gray-600 text-[10px]">÷</span>
           <span className="text-[10px] font-mono font-bold text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded">E:{effort}</span>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function FeatureInputForm({ onAddFeature }: FormProps) {
 
       <button 
         type="submit" 
-        className="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition shadow-lg shadow-blue-600/20"
+        className="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-semibold py-3 rounded-lg transition shadow-sm dark:shadow-lg shadow-blue-600/20"
       >
         Calculate & Add Feature
       </button>

@@ -64,16 +64,16 @@ function AcceptInviteContent() {
   }, [inviteCode]);
 
   return (
-    <div className="min-h-screen bg-[#0E1015] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-100 dark:bg-[#0E1015] flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        <div className="bg-[#171923] rounded-3xl border border-white/[0.06] p-8 text-center">
+        <div className="bg-white dark:bg-[#171923] rounded-3xl border border-slate-200 dark:border-white/[0.06] p-8 text-center">
           {status === "loading" && (
             <>
               <div className="flex justify-center mb-6">
                 <Loader2 size={48} className="text-blue-400 animate-spin" />
               </div>
-              <h1 className="text-2xl font-bold text-white mb-2">Processing Invite</h1>
-              <p className="text-gray-400">Preparing your workspace access...</p>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Processing Invite</h1>
+              <p className="text-slate-500 dark:text-gray-400">Preparing your workspace access...</p>
             </>
           )}
 
@@ -82,8 +82,8 @@ function AcceptInviteContent() {
               <div className="flex justify-center mb-6">
                 <Loader2 size={48} className="text-blue-400 animate-spin" />
               </div>
-              <h1 className="text-2xl font-bold text-white mb-2">Accepting Invite</h1>
-              <p className="text-gray-400">Setting up your workspace membership...</p>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Accepting Invite</h1>
+              <p className="text-slate-500 dark:text-gray-400">Setting up your workspace membership...</p>
             </>
           )}
 
@@ -92,11 +92,11 @@ function AcceptInviteContent() {
               <div className="flex justify-center mb-6">
                 <CheckCircle2 size={48} className="text-emerald-400" />
               </div>
-              <h1 className="text-2xl font-bold text-white mb-2">Invite Accepted!</h1>
-              <p className="text-gray-400 mb-6">{message}</p>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Invite Accepted!</h1>
+              <p className="text-slate-500 dark:text-gray-400 mb-6">{message}</p>
               <Link
                 href={workspaceId ? `/?workspace=${encodeURIComponent(workspaceId)}` : "/"}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-blue-500"
               >
                 Go to Dashboard
                 <ArrowRight size={16} />
@@ -109,19 +109,19 @@ function AcceptInviteContent() {
               <div className="flex justify-center mb-6">
                 <AlertTriangle size={48} className="text-red-400" />
               </div>
-              <h1 className="text-2xl font-bold text-white mb-2">Invite Error</h1>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Invite Error</h1>
               <p className="text-red-200 mb-6">{message}</p>
               <div className="flex flex-col gap-3">
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-blue-500"
                 >
                   Sign In or Sign Up
                   <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/"
-                  className="text-sm text-gray-400 hover:text-gray-200 transition"
+                  className="text-sm text-slate-500 dark:text-gray-400 hover:text-gray-200 transition"
                 >
                   Back to Home
                 </Link>
@@ -136,7 +136,7 @@ function AcceptInviteContent() {
 
 export default function AcceptInvitePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0E1015]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-slate-100 dark:bg-[#0E1015]" />}>
       <AcceptInviteContent />
     </Suspense>
   );

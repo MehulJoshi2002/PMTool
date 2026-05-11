@@ -41,15 +41,15 @@ export default function PropertiesPanel({
   );
 
   return (
-    <aside className="w-72 bg-[#1a1a2e] border-l border-white/5 flex flex-col shrink-0 overflow-y-auto">
+    <aside className="w-72 bg-white dark:bg-[#1a1a2e] border-l border-slate-200 dark:border-white/5 flex flex-col shrink-0 overflow-y-auto">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
-        <h3 className="text-sm font-bold text-white tracking-wide uppercase">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-white/5">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-white tracking-wide uppercase">
           Properties
         </h3>
         <button
           onClick={onClose}
-          className="text-gray-500 hover:text-gray-300 transition"
+          className="text-slate-600 dark:text-gray-500 hover:text-slate-900 dark:hover:text-gray-300 transition"
         >
           <X size={18} />
         </button>
@@ -58,21 +58,36 @@ export default function PropertiesPanel({
       <div className="p-5 space-y-5 flex-1">
         {/* Label */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
             Label
           </label>
           <input
             type="text"
             value={node.label}
             onChange={(e) => onUpdateNode(node.id, { label: e.target.value })}
-            className="w-full bg-white/5 border border-white/10 text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition"
+            className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition"
             placeholder="Node label..."
+          />
+        </div>
+
+        {/* Font Size */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            Font Size
+          </label>
+          <input
+            type="number"
+            value={node.fontSize || 13}
+            onChange={(e) => onUpdateNode(node.id, { fontSize: Number(e.target.value) })}
+            className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition"
+            min="8"
+            max="72"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
             Description
           </label>
           <textarea
@@ -80,7 +95,7 @@ export default function PropertiesPanel({
             onChange={(e) =>
               onUpdateNode(node.id, { description: e.target.value })
             }
-            className="w-full bg-white/5 border border-white/10 text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition resize-none"
+            className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition resize-none"
             rows={3}
             placeholder="Add notes..."
           />
@@ -88,7 +103,7 @@ export default function PropertiesPanel({
 
         {/* Shape Type */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
             Shape Type
           </label>
           <select
@@ -96,10 +111,10 @@ export default function PropertiesPanel({
             onChange={(e) =>
               onUpdateNode(node.id, { type: e.target.value as ShapeType })
             }
-            className="w-full bg-white/5 border border-white/10 text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 appearance-none cursor-pointer"
+            className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500 appearance-none cursor-pointer"
           >
             {SHAPE_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-gray-900">
+              <option key={opt.value} value={opt.value} className="bg-white dark:bg-gray-900 text-slate-900 dark:text-white">
                 {opt.label}
               </option>
             ))}
@@ -108,7 +123,7 @@ export default function PropertiesPanel({
 
         {/* Color */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
             Color
           </label>
           <div className="flex flex-wrap gap-2">
@@ -133,30 +148,30 @@ export default function PropertiesPanel({
 
         {/* Position */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
             Position
           </label>
           <div className="flex gap-2">
             <div className="flex-1">
-              <span className="text-[10px] text-gray-500 font-mono">X</span>
+              <span className="text-[10px] text-slate-600 dark:text-gray-500 font-mono">X</span>
               <input
                 type="number"
                 value={node.x}
                 onChange={(e) =>
                   onUpdateNode(node.id, { x: Number(e.target.value) })
                 }
-                className="w-full bg-white/5 border border-white/10 text-white text-xs px-2 py-1.5 rounded-md font-mono focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-xs px-2 py-1.5 rounded-md font-mono focus:outline-none focus:border-blue-500"
               />
             </div>
             <div className="flex-1">
-              <span className="text-[10px] text-gray-500 font-mono">Y</span>
+              <span className="text-[10px] text-slate-600 dark:text-gray-500 font-mono">Y</span>
               <input
                 type="number"
                 value={node.y}
                 onChange={(e) =>
                   onUpdateNode(node.id, { y: Number(e.target.value) })
                 }
-                className="w-full bg-white/5 border border-white/10 text-white text-xs px-2 py-1.5 rounded-md font-mono focus:outline-none focus:border-blue-500"
+                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-xs px-2 py-1.5 rounded-md font-mono focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
@@ -165,7 +180,7 @@ export default function PropertiesPanel({
         {/* Connections info */}
         {nodeConnections.length > 0 && (
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               Connections ({nodeConnections.length})
             </label>
             <div className="space-y-1.5">
@@ -180,7 +195,7 @@ export default function PropertiesPanel({
                 return (
                   <div
                     key={conn.id}
-                    className="flex items-center gap-2 text-xs text-gray-400 bg-white/5 px-2 py-1.5 rounded-md"
+                    className="flex items-center gap-2 text-xs text-slate-500 dark:text-gray-400 bg-white/5 px-2 py-1.5 rounded-md"
                   >
                     <span className="text-blue-400 font-mono">{direction}</span>
                     <span className="truncate">
@@ -195,7 +210,7 @@ export default function PropertiesPanel({
       </div>
 
       {/* Delete button */}
-      <div className="p-5 border-t border-white/5">
+      <div className="p-5 border-t border-slate-200 dark:border-white/5">
         <button
           onClick={() => onDeleteNode(node.id)}
           className="w-full flex items-center justify-center gap-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 px-4 py-2.5 rounded-lg transition font-medium text-sm"

@@ -64,40 +64,25 @@ export default function ShapeToolbar({
   };
 
   return (
-    <aside className="w-[72px] bg-[#1a1a2e] flex flex-col items-center py-4 gap-1 border-r border-white/5 select-none shrink-0">
+    <aside className="w-[72px] bg-white dark:bg-[#1a1a2e] flex flex-col items-center py-4 gap-1 border-r border-slate-200 dark:border-white/5 select-none shrink-0">
       {/* Tool Modes */}
       <button
         onClick={() => onSetTool(activeTool === "select" ? null : "select")}
         className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 group relative ${
           activeTool === "select"
-            ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-            : "text-gray-400 hover:bg-white/10 hover:text-white"
+            ? "bg-blue-600 text-slate-900 dark:text-white shadow-sm dark:shadow-lg shadow-blue-600/30"
+            : "text-slate-500 dark:text-gray-400 hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-white/[0.08] dark:hover:text-white"
         }`}
         title="Select & Move"
       >
         <MousePointer2 size={20} />
-        <span className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+        <span className="absolute left-full ml-3 px-2 py-1 bg-slate-800 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
           Select
         </span>
       </button>
 
-      <button
-        onClick={() => onSetTool(activeTool === "connect" ? null : "connect")}
-        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 group relative ${
-          activeTool === "connect"
-            ? "bg-violet-600 text-white shadow-lg shadow-violet-600/30"
-            : "text-gray-400 hover:bg-white/10 hover:text-white"
-        }`}
-        title="Connect Shapes"
-      >
-        <Spline size={20} />
-        <span className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
-          Connect
-        </span>
-      </button>
-
-      {/* Divider */}
-      <div className="w-8 h-px bg-white/10 my-2" />
+      {/* Removed Connect button since we use drag-to-connect now */}
+      <div className="w-8 h-px bg-slate-200 dark:bg-white/10 my-2" />
 
       {/* Shape Palette */}
       {SHAPE_OPTIONS.map((shape) => (
@@ -105,18 +90,18 @@ export default function ShapeToolbar({
           key={shape.type}
           draggable
           onDragStart={(e) => handleDragStart(e, shape.type)}
-          className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white cursor-grab active:cursor-grabbing transition-all duration-200 group relative"
+          className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 dark:text-gray-400 hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-white/[0.08] dark:hover:text-white cursor-grab active:cursor-grabbing transition-all duration-200 group relative"
           title={`Drag to add: ${shape.label}`}
         >
           {shape.icon}
-          <span className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+          <span className="absolute left-full ml-3 px-2 py-1 bg-slate-800 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
             {shape.label}
           </span>
         </div>
       ))}
 
       {/* Divider */}
-      <div className="w-8 h-px bg-white/10 my-2" />
+      <div className="w-8 h-px bg-slate-200 dark:bg-white/10 my-2" />
 
       {/* Actions */}
       <button
@@ -125,23 +110,23 @@ export default function ShapeToolbar({
         className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 group relative ${
           hasSelection
             ? "text-red-400 hover:bg-red-500/20 hover:text-red-300"
-            : "text-gray-600 cursor-not-allowed"
+            : "text-slate-400 dark:text-gray-600 cursor-not-allowed"
         }`}
         title="Delete Selected"
       >
         <Trash2 size={20} />
-        <span className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+        <span className="absolute left-full ml-3 px-2 py-1 bg-slate-800 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
           Delete
         </span>
       </button>
 
       <button
         onClick={onClearAll}
-        className="w-12 h-12 rounded-xl flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-all duration-200 group relative"
+        className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-500 dark:text-gray-400 hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-white/[0.08] dark:hover:text-white transition-all duration-200 group relative"
         title="Clear All"
       >
         <RotateCcw size={20} />
-        <span className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+        <span className="absolute left-full ml-3 px-2 py-1 bg-slate-800 dark:bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
           Clear All
         </span>
       </button>

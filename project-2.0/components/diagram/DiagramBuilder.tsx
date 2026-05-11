@@ -11,6 +11,7 @@ import DiagramCanvas from "./DiagramCanvas";
 import PropertiesPanel from "./PropertiesPanel";
 import Link from "next/link";
 import { ArrowLeft, Workflow, Save, Image, CheckCircle } from "lucide-react";
+import { TutorialButton } from "../ui/TutorialButton";
 
 const STORAGE_KEY = "productos_diagram_v1";
 
@@ -46,31 +47,33 @@ export default function DiagramBuilder() {
     } catch {}
   }, [nodes, connections]);
 
-  // Export SVG diagram as PNG
-  const handleExportPNG = useCallback(() => {
-    const svg = document.querySelector("svg") as SVGSVGElement | null;
-    if (!svg) return;
-    const svgData = new XMLSerializer().serializeToString(svg);
+
+
+  // Export diagram as pure SVG
+  const handleExportSVG = useCallback(() => {
+    const svg = document.querySelector("#diagram-canvas") as SVGSVGElement | null;
+    if (!svg) {
+      alert("Could not find the diagram canvas.");
+      return;
+    }
+
+    const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
+    clonedSvg.setAttribute("width", String(svg.clientWidth));
+    clonedSvg.setAttribute("height", String(svg.clientHeight));
+    
+    if (!clonedSvg.getAttribute("xmlns")) {
+      clonedSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+
+    const svgData = new XMLSerializer().serializeToString(clonedSvg);
     const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
     const url = URL.createObjectURL(svgBlob);
-    const img = new window.Image();
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = svg.clientWidth * 2;
-      canvas.height = svg.clientHeight * 2;
-      const ctx = canvas.getContext("2d")!;
-      ctx.fillStyle = "#0f0f1a";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(2, 2);
-      ctx.drawImage(img, 0, 0);
-      URL.revokeObjectURL(url);
-      const pngUrl = canvas.toDataURL("image/png");
-      const a = document.createElement("a");
-      a.href = pngUrl;
-      a.download = "roadmap-diagram.png";
-      a.click();
-    };
-    img.src = url;
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "roadmap-diagram.svg";
+    a.click();
+    URL.revokeObjectURL(url);
   }, []);
 
 
@@ -174,30 +177,33 @@ export default function DiagramBuilder() {
 
   return (
     <div
-      className="h-screen flex flex-col bg-[#0f0f1a] overflow-hidden"
+      className="h-screen flex flex-col bg-slate-50 dark:bg-[#0f0f1a] overflow-hidden"
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
       {/* Top bar */}
-      <header className="h-14 bg-[#1a1a2e] border-b border-white/5 flex items-center justify-between px-5 shrink-0">
+      <header className="h-14 bg-white dark:bg-[#1a1a2e] border-b border-slate-200 dark:border-white/5 flex items-center justify-between px-5 shrink-0">
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm"
+            className="flex items-center gap-2 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition text-sm"
           >
             <ArrowLeft size={16} />
             Back
           </Link>
-          <div className="w-px h-6 bg-white/10" />
+          <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center">
-              <Workflow size={16} className="text-white" />
+              <Workflow size={16} className="text-slate-900 dark:text-white" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-white leading-tight">
-                Roadmapping
-              </h1>
-              <p className="text-[10px] text-gray-500 font-medium">
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                  Roadmapping
+                </h1>
+                <TutorialButton tutorialKey="journey" />
+              </div>
+              <p className="text-[10px] text-slate-600 dark:text-gray-500 font-medium">
                 User Journeys & Flows
               </p>
             </div>
@@ -205,22 +211,22 @@ export default function DiagramBuilder() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-white/5 text-gray-400 px-3 py-1.5 rounded-lg text-xs font-mono border border-white/5">
+          <div className="bg-white/5 text-slate-500 dark:text-gray-400 px-3 py-1.5 rounded-lg text-xs font-mono border border-white/5">
             {nodes.length} nodes · {connections.length} connections
           </div>
           <button
-            onClick={handleExportPNG}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-white/[0.04] border border-white/[0.08] text-gray-400 hover:text-white rounded-lg text-xs font-medium transition"
+            onClick={handleExportSVG}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-xs font-medium transition"
           >
             <Image size={14} />
-            Export PNG
+            Export SVG
           </button>
           <button
             onClick={handleSave}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition border ${
               saved
                 ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                : "bg-white/[0.04] border-white/[0.08] text-gray-400 hover:text-white"
+                : "bg-slate-100 dark:bg-white/[0.04] border-slate-200 dark:border-white/[0.08] text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
             {saved ? <CheckCircle size={14} /> : <Save size={14} />}

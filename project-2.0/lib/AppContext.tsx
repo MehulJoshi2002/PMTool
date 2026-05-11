@@ -26,6 +26,7 @@ interface AppContextType {
   updateFeature: (id: string, updates: Partial<BoardFeature>) => void;
   deleteFeature: (id: string) => void;
   addRelease: (name: string, date: string) => void;
+  updateRelease: (id: string, updates: Partial<Release>) => void;
   deleteRelease: (id: string) => void;
   moveFeature: (featureId: string, toReleaseId: string) => void;
   addObjective: (title: string, targetMetric: string) => void;
@@ -324,6 +325,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (data) setReleases(prev => [...prev, toRelease(data)]);
   }, [activeWorkspaceId, releases.length]);
 
+  const updateRelease = useCallback(async (id: string, updates: Partial<Release>) => {
+    const dbUpdates: Record<string, any> = {};
+    if ('name' in updates) dbUpdates.name = updates.name;
+    if ('date' in updates) dbUpdates.date = updates.date;
+    if ('startDate' in updates) dbUpdates.start_date = updates.startDate;
+    if ('endDate' in updates) dbUpdates.end_date = updates.endDate;
+    if ('color' in updates) dbUpdates.color = updates.color;
+
+    const { data } = await supabase.from('releases').update(dbUpdates).eq('id', id).select().single();
+    if (data) setReleases(prev => prev.map(r => r.id === id ? toRelease(data) : r));
+  }, []);
+
   const deleteRelease = useCallback(async (id: string) => {
     const remaining = releases.filter(r => r.id !== id);
     const fallbackId = remaining[0]?.id;
@@ -368,7 +381,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <AppContext.Provider value={{
       workspaces, activeWorkspaceId, addWorkspace, switchWorkspace, deleteWorkspace,
       features, releases, objectives, ideas,
-      addFeature, updateFeature, deleteFeature, addRelease, deleteRelease, moveFeature,
+      addFeature, updateFeature, deleteFeature, addRelease, updateRelease, deleteRelease, moveFeature,
       addObjective, deleteObjective, addIdea, convertIdeaToFeature,
       isPresentMode, setIsPresentMode, loading,
     }}>

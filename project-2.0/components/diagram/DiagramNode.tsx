@@ -9,9 +9,10 @@ interface DiagramNodeProps {
   isConnecting: boolean;
   onMouseDown: (e: React.MouseEvent, nodeId: string) => void;
   onDoubleClick: (nodeId: string) => void;
-  onPortClick: (nodeId: string, port: PortPosition) => void;
+  onPortMouseDown: (e: React.MouseEvent, nodeId: string, port: PortPosition) => void;
   onPortMouseEnter: (nodeId: string, port: PortPosition) => void;
   onPortMouseLeave: () => void;
+  onResizeMouseDown: (e: React.MouseEvent, nodeId: string) => void;
 }
 
 // Render the correct SVG shape for the node type
@@ -123,9 +124,10 @@ export default function DiagramNodeComponent({
   isConnecting,
   onMouseDown,
   onDoubleClick,
-  onPortClick,
+  onPortMouseDown,
   onPortMouseEnter,
   onPortMouseLeave,
+  onResizeMouseDown,
 }: DiagramNodeProps) {
   return (
     <g
@@ -158,9 +160,9 @@ export default function DiagramNodeComponent({
           }}
         >
           <span
+            className="text-slate-800 dark:text-slate-200"
             style={{
-              color: "#e2e8f0",
-              fontSize: 13,
+              fontSize: node.fontSize || 13,
               fontWeight: 600,
               textAlign: "center",
               lineHeight: 1.3,
@@ -189,9 +191,9 @@ export default function DiagramNodeComponent({
                 r={14}
                 fill="transparent"
                 style={{ cursor: "crosshair" }}
-                onClick={(e) => {
+                onMouseDown={(e) => {
                   e.stopPropagation();
-                  onPortClick(node.id, port);
+                  onPortMouseDown(e, node.id, port);
                 }}
                 onMouseEnter={() => onPortMouseEnter(node.id, port)}
                 onMouseLeave={onPortMouseLeave}
@@ -214,6 +216,28 @@ export default function DiagramNodeComponent({
             </g>
           );
         })}
+
+      {/* Resize Handle (bottom-right) */}
+      {isSelected && (
+        <g
+          transform={`translate(${node.width}, ${node.height})`}
+          style={{ cursor: "nwse-resize" }}
+          onMouseDown={(e) => {
+            e.stopPropagation();
+            onResizeMouseDown(e, node.id);
+          }}
+        >
+          {/* Invisible hit area */}
+          <rect x={-15} y={-15} width={30} height={30} fill="transparent" />
+          {/* Visible handle */}
+          <path
+            d="M -8 0 L 0 -8 M -4 0 L 0 -4"
+            stroke="#fff"
+            strokeWidth={2}
+            strokeLinecap="round"
+          />
+        </g>
+      )}
     </g>
   );
 }

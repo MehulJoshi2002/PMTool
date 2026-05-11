@@ -23,9 +23,9 @@ export default function PriorityMatrix({ features }: MatrixProps) {
       return (
         <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
           <p className="font-bold text-gray-900 mb-1">{data.name}</p>
-          <p className="text-sm text-gray-600">Reach: <span className="font-semibold">{data.reach}</span></p>
-          <p className="text-sm text-gray-600">Impact: <span className="font-semibold">{data.y}</span></p>
-          <p className="text-sm text-gray-600">Effort: <span className="font-semibold">{data.x}</span></p>
+          <p className="text-sm text-slate-400 dark:text-gray-600">Reach: <span className="font-semibold">{data.reach}</span></p>
+          <p className="text-sm text-slate-400 dark:text-gray-600">Impact: <span className="font-semibold">{data.y}</span></p>
+          <p className="text-sm text-slate-400 dark:text-gray-600">Effort: <span className="font-semibold">{data.x}</span></p>
           <p className="text-xs font-mono text-blue-600 mt-2">Score: {data.score}</p>
         </div>
       );
@@ -39,7 +39,7 @@ export default function PriorityMatrix({ features }: MatrixProps) {
       <div className="absolute top-6 left-12 text-xs font-bold text-green-600 opacity-50 bg-green-50 px-2 py-1 rounded">Quick Wins</div>
       <div className="absolute bottom-10 right-6 text-xs font-bold text-red-600 opacity-50 bg-red-50 px-2 py-1 rounded">Time Sinks</div>
       <div className="absolute top-6 right-6 text-xs font-bold text-orange-600 opacity-50 bg-orange-50 px-2 py-1 rounded">Major Projects</div>
-      <div className="absolute bottom-10 left-12 text-xs font-bold text-gray-400 opacity-50 bg-gray-50 px-2 py-1 rounded">Fill-ins</div>
+      <div className="absolute bottom-10 left-12 text-xs font-bold text-slate-500 dark:text-gray-400 opacity-50 bg-gray-50 px-2 py-1 rounded">Fill-ins</div>
 
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>

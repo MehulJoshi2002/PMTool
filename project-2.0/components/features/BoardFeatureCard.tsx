@@ -88,7 +88,7 @@ export default function BoardFeatureCard({
         e.dataTransfer.effectAllowed = 'move';
         onDragStart(feature.id);
       }}
-      className={`bg-[#171923] border ${hasViolation ? 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]' : 'border-white/[0.06]'} rounded-lg p-3.5 hover:border-white/[0.12] hover:bg-[#1c1f2e] transition group cursor-grab active:cursor-grabbing active:shadow-2xl active:shadow-blue-500/10 active:ring-1 active:ring-blue-500/20`}
+      className={`bg-white dark:bg-[#171923] border ${hasViolation ? 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]' : 'border-slate-200 dark:border-white/[0.06]'} rounded-lg p-3.5 hover:border-slate-300 dark:hover:border-white/[0.12] hover:bg-slate-50 dark:hover:bg-[#1c1f2e] transition group cursor-grab active:cursor-grabbing active:shadow-2xl active:shadow-blue-500/10 active:ring-1 active:ring-blue-500/20`}
     >
       {/* Dependency Warning */}
       {hasViolation && (
@@ -102,9 +102,9 @@ export default function BoardFeatureCard({
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
           <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center">
-            <Plus size={10} className="text-white" />
+            <Plus size={10} className="text-slate-900 dark:text-white" />
           </div>
-          <span className="text-[10px] font-bold text-gray-500 font-mono">{feature.productId}</span>
+          <span className="text-[10px] font-bold text-slate-600 dark:text-gray-500 font-mono">{feature.productId}</span>
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -134,7 +134,7 @@ export default function BoardFeatureCard({
             <button
               onClick={() => setIsExpanded(true)}
               onMouseDown={(e) => e.stopPropagation()}
-              className="text-[9px] text-gray-500 hover:text-blue-400 transition font-medium border border-dashed border-gray-600/50 px-1.5 py-0.5 rounded"
+              className="text-[9px] text-slate-600 dark:text-gray-500 hover:text-blue-400 transition font-medium border border-dashed border-gray-600/50 px-1.5 py-0.5 rounded"
               title="Score feature"
             >
               Assess Score
@@ -146,17 +146,17 @@ export default function BoardFeatureCard({
             <button
               onClick={(e) => { e.stopPropagation(); setShowMenu(!showMenu); }}
               onMouseDown={(e) => e.stopPropagation()}
-              className="p-0.5 rounded text-gray-600 hover:text-gray-300 opacity-0 group-hover:opacity-100 transition"
+              className="p-0.5 rounded text-slate-400 dark:text-gray-600 hover:text-slate-900 dark:hover:text-gray-300 opacity-0 group-hover:opacity-100 transition"
             >
               <MoreHorizontal size={12} />
             </button>
             {showMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} onMouseDown={(e) => e.stopPropagation()} />
-                <div className="absolute right-0 top-6 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-36" onMouseDown={(e) => e.stopPropagation()}>
+                <div className="absolute right-0 top-6 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-36" onMouseDown={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => { setIsEditing(true); setShowMenu(false); }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-gray-300 hover:bg-white/[0.05] transition"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition"
                   >
                     <Pencil size={11} />
                     Edit title
@@ -186,18 +186,18 @@ export default function BoardFeatureCard({
             if (e.key === 'Enter') handleSaveTitle();
             if (e.key === 'Escape') { setEditTitle(feature.title); setIsEditing(false); }
           }}
-          className="w-full bg-transparent text-sm font-semibold text-white focus:outline-none border-b border-blue-500/50 mb-2 cursor-text"
+          className="w-full bg-transparent text-sm font-semibold text-slate-900 dark:text-white focus:outline-none border-b border-blue-500/50 mb-2 cursor-text"
           autoFocus
         />
       ) : (
-        <p className="text-sm font-semibold text-white mb-2 leading-snug">{feature.title}</p>
+        <p className="text-sm font-semibold text-slate-900 dark:text-white mb-2 leading-snug">{feature.title}</p>
       )}
 
       {/* Inline Expandable Scorecard */}
       {isExpanded && (
-        <div className="mb-3 p-3 bg-black/20 rounded-lg border border-white/[0.04]" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
+        <div className="mb-3 p-3 bg-white dark:bg-black/20 rounded-lg border border-white/[0.04]" onMouseDown={e => e.stopPropagation()} onClick={e => e.stopPropagation()}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Scorecard</span>
+            <span className="text-[10px] font-bold text-slate-600 dark:text-gray-500 uppercase tracking-widest">Scorecard</span>
             <span className="text-xs font-mono font-bold text-blue-400">{feature.score ?? '-'}</span>
           </div>
           
@@ -213,8 +213,8 @@ export default function BoardFeatureCard({
               return (
                 <div key={field.id} className="flex flex-col gap-1">
                   <div className="flex justify-between items-center">
-                    <span className="text-[9px] text-gray-400 font-medium uppercase">{field.label}</span>
-                    <span className="text-[9px] text-gray-500 font-mono">{val}/{field.max}</span>
+                    <span className="text-[9px] text-slate-500 dark:text-gray-400 font-medium uppercase">{field.label}</span>
+                    <span className="text-[9px] text-slate-600 dark:text-gray-500 font-mono">{val}/{field.max}</span>
                   </div>
                   <input
                     type="range"
@@ -245,7 +245,7 @@ export default function BoardFeatureCard({
           {showStatusPicker && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowStatusPicker(false)} />
-              <div className="absolute left-0 top-7 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-44">
+              <div className="absolute left-0 top-7 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-44">
                 {Object.entries(STATUS_CONFIG).map(([key, val]) => (
                   <button
                     key={key}
@@ -253,8 +253,8 @@ export default function BoardFeatureCard({
                       onUpdate(feature.id, { status: key as FeatureStatus });
                       setShowStatusPicker(false);
                     }}
-                    className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
-                      feature.status === key ? 'text-white font-semibold' : 'text-gray-400'
+                    className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
+                      feature.status === key ? 'text-slate-900 dark:text-white font-semibold' : 'text-slate-500 dark:text-gray-400'
                     }`}
                   >
                     <div className={`w-1.5 h-1.5 rounded-full ${val.bg.replace('bg-', 'bg-').replace('/15', '')}`}
@@ -274,8 +274,8 @@ export default function BoardFeatureCard({
             onClick={() => setShowOkrPicker(!showOkrPicker)}
             className={`text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1 transition hover:opacity-80 border ${
               linkedOkr 
-                ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' 
-                : 'text-gray-500 border-white/[0.05] hover:bg-white/[0.05] hover:text-gray-300'
+                ? 'bg-orange-500/10 text-orange-500 dark:text-orange-400 border-orange-500/20' 
+                : 'text-slate-600 dark:text-gray-500 border-slate-200 dark:border-white/[0.05] hover:bg-slate-200 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-gray-300'
             }`}
             title={linkedOkr ? `Linked to OKR: ${linkedOkr.title}` : 'Link to OKR'}
           >
@@ -286,8 +286,8 @@ export default function BoardFeatureCard({
           {showOkrPicker && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowOkrPicker(false)} />
-              <div className="absolute left-0 top-7 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-56">
-                <div className="px-3 py-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
+              <div className="absolute left-0 top-7 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-56">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-600 dark:text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
                   Link to Objective
                 </div>
                 
@@ -296,8 +296,8 @@ export default function BoardFeatureCard({
                     onUpdate(feature.id, { okrId: undefined });
                     setShowOkrPicker(false);
                   }}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
-                    !feature.okrId ? 'text-white' : 'text-gray-400'
+                  className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
+                    !feature.okrId ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-gray-400'
                   }`}
                 >
                   <span className="truncate">None / Unlinked</span>
@@ -310,8 +310,8 @@ export default function BoardFeatureCard({
                       onUpdate(feature.id, { okrId: okr.id });
                       setShowOkrPicker(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
-                      feature.okrId === okr.id ? 'text-orange-400 font-semibold' : 'text-gray-400'
+                    className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
+                      feature.okrId === okr.id ? 'text-orange-400 font-semibold' : 'text-slate-500 dark:text-gray-400'
                     }`}
                   >
                     <span className="truncate text-left flex-1" title={okr.title}>{okr.title}</span>
@@ -328,8 +328,8 @@ export default function BoardFeatureCard({
             onClick={() => setShowBlockerPicker(!showBlockerPicker)}
             className={`text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1 transition border ${
               primaryBlocker 
-                ? hasViolation ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:opacity-80' : 'bg-white/[0.05] text-white border-white/[0.1] hover:bg-white/[0.08]' 
-                : 'text-gray-500 border-transparent hover:bg-white/[0.05] hover:text-gray-300'
+                ? hasViolation ? 'bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20 hover:opacity-80' : 'bg-slate-200 dark:bg-white/[0.05] text-slate-900 dark:text-white border-slate-200 dark:border-white/[0.1] hover:bg-slate-200 dark:bg-white/[0.08]' 
+                : 'text-slate-600 dark:text-gray-500 border-transparent hover:bg-slate-200 dark:bg-white/[0.05] hover:text-slate-900 dark:hover:text-gray-300'
             }`}
           >
             <LinkIcon size={10} />
@@ -339,8 +339,8 @@ export default function BoardFeatureCard({
           {showBlockerPicker && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowBlockerPicker(false)} />
-              <div className="absolute right-0 top-7 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-64 max-h-64 overflow-y-auto">
-                <div className="px-3 py-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
+              <div className="absolute right-0 top-7 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-64 max-h-64 overflow-y-auto">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-600 dark:text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
                   Mark Blocked By
                 </div>
                 
@@ -349,8 +349,8 @@ export default function BoardFeatureCard({
                     onUpdate(feature.id, { blockedBy: [] });
                     setShowBlockerPicker(false);
                   }}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
-                    myBlockers.length === 0 ? 'text-white' : 'text-gray-400'
+                  className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
+                    myBlockers.length === 0 ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-gray-400'
                   }`}
                 >
                   <span className="truncate">No Blockers</span>
@@ -365,8 +365,8 @@ export default function BoardFeatureCard({
                         onUpdate(feature.id, { blockedBy: [other.id] });
                         setShowBlockerPicker(false);
                       }}
-                      className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
-                        isBlocking ? 'text-red-400 font-semibold' : 'text-gray-400'
+                      className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
+                        isBlocking ? 'text-red-400 font-semibold' : 'text-slate-500 dark:text-gray-400'
                       }`}
                     >
                       <span className="text-[10px] font-mono shrink-0">{other.productId}</span>
@@ -395,7 +395,7 @@ export default function BoardFeatureCard({
         <div className="relative inline-block mt-0.5">
           <button
             onClick={() => setShowLabelPicker(!showLabelPicker)}
-            className="text-[9px] text-gray-500 hover:text-gray-300 font-medium flex items-center gap-0.5 transition"
+            className="text-[9px] text-slate-600 dark:text-gray-500 hover:text-slate-900 dark:hover:text-gray-300 font-medium flex items-center gap-0.5 transition"
           >
             <Tag size={9} /> {myLabels.length > 0 ? '+' : 'Add Label'}
           </button>
@@ -403,8 +403,8 @@ export default function BoardFeatureCard({
           {showLabelPicker && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setShowLabelPicker(false)} />
-              <div className="absolute left-0 bottom-full mb-1 z-50 bg-[#1e2132] border border-white/[0.1] rounded-lg shadow-xl py-1 w-40 max-h-48 overflow-y-auto">
-                <div className="px-3 py-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
+              <div className="absolute left-0 bottom-full mb-1 z-50 bg-white dark:bg-[#1e2132] border border-slate-200 dark:border-white/[0.1] rounded-lg shadow-xl py-1 w-40 max-h-48 overflow-y-auto">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-600 dark:text-gray-500 uppercase tracking-wider border-b border-white/[0.05] mb-1">
                   Tags
                 </div>
                 {CUSTOM_LABELS.map(cfg => {
@@ -413,12 +413,12 @@ export default function BoardFeatureCard({
                     <button
                       key={cfg.id}
                       onClick={() => toggleLabel(cfg.id)}
-                      className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-white/[0.05] ${
+                      className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs transition hover:bg-slate-200 dark:bg-white/[0.05] ${
                         isActive ? 'bg-white/[0.03]' : ''
                       }`}
                     >
                       <div className={`w-2 h-2 rounded-sm border ${cfg.color}`} />
-                      <span className={isActive ? 'text-white font-medium' : 'text-gray-400'}>{cfg.label}</span>
+                      <span className={isActive ? 'text-slate-900 dark:text-white font-medium' : 'text-slate-500 dark:text-gray-400'}>{cfg.label}</span>
                     </button>
                   );
                 })}
